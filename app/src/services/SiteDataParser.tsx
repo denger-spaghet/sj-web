@@ -12,14 +12,14 @@ interface SiteDataParserProps {
 }
 
 const SiteDataParser: React.FC<SiteDataParserProps> = ({ data }) => {
-return (
-    <div className="content">
-      {data.map((d, index) => {
-        const Component = componentMap[d.type] || componentMap.default;
-        return <Component key={index} {...d} />;
-      })}
-    </div>
-);
+    return (
+        <div className="content">
+        {data.map((d, index) => {
+            const Component = componentMap[d.type] || componentMap.default;
+            return <Component key={index} {...d} />;
+        })}
+        </div>
+    );
 };
 
 export default SiteDataParser;

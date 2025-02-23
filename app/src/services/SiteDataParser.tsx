@@ -1,35 +1,23 @@
 import PlainText from '../components/PlainText.tsx';
-import Default from '../components/Default.tsx';
 
 import React from 'react';
 
-const data = [
-    {
-        text : 'hello',
-        component : 'plainText'
-    },
-    {
-        text : 'world',
-        component : 'plainText'
-    }
-]
-  
-const componentMap = {
-plainText : PlainText,
-default   : Default,
+const componentMap: Record<string, React.ComponentType<any>> = {
+    plainText: PlainText,
+    default: () => <div className="text-red-500">Unknown Component</div>,
+};
+
+interface SiteDataParserProps {
+    data: { type: string; [key: string]: any }[];
 }
 
-const SiteDataParser: React.FC = () => {
+const SiteDataParser: React.FC<SiteDataParserProps> = ({ data }) => {
 return (
     <div className="content">
-    {
-        data.map( d => {
-        const Component = componentMap[ d.component ] 
-            || componentMap.default;
-            
-        return <Component {...d} />;
-        } )
-    }
+      {data.map((d, index) => {
+        const Component = componentMap[d.type] || componentMap.default;
+        return <Component key={index} {...d} />;
+      })}
     </div>
 );
 };
